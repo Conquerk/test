@@ -1,0 +1,9 @@
+d=dict([("name","tarena"),("age",15)])
+print(d)
+d["address"]="北京市海淀区"
+print(d["name"])
+print(d)
+d1={}
+print(d1)
+d2=dict(name="tarena",age=15)
+print(d2)

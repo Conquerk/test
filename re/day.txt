@@ -1,0 +1,338 @@
+Day01�ع�
+1��MySQL�ص�
+  1����ϵ�����ݿ�
+  2����ƽ̨
+  3��֧�ֶ��ֱ������
+2��������
+  sudo /etc/init.d/mysql start|stop|restart
+  mysql -h������ַ -uroot -p����
+  MySQL�����������ļ�����ʽ��������ݿ�Ŀ¼/var/lib/mysql
+  ��ϵ�����ݿ�ĺ��������� ��ϵ �� ��ά��
+3��SQL����
+  1����Ĺ���
+    1��show databases;
+    2��create database ���� character set utf8;
+    3��select database();
+    4��use ����;
+    5��show tables;
+    6��drop database ����;
+  2����Ĺ���
+    1��create table ����(
+      �ֶ�1 ��������,
+      �ֶ�2 ��������
+      )character set utf8;
+      )charset=utf8;
+    2��show create table ����; (�洢���桢�ַ���)
+    3��desc ����;
+    4��drop table ��1,��2;
+  3�����¼����
+    1�������¼(insert)
+      insert into ���� values(ֵ1),(ֵ2),(ֵ3);
+      insert into ����(�ֶ�1,�ֶ�2) values(),();
+    2����ѯ��¼(select)
+      select * from ���� where ����;
+      select �ֶ�1,�ֶ�2 from ���� where ����;
+4����θ���Ĭ���ַ���
+  1��sudo -i
+  2��cd /etc/mysql/mysql.conf.d/
+  3��cp mysqld.cnf mysqld.cnf.bak
+  4��vi mysqld.cnf
+    [mysqld]
+    character_set_server=utf8
+  5��/etc/init.d/mysql restart | reload
+5����������
+  1����ֵ����
+    1������
+      1��int (4���ֽ�)
+      2��tinyint (1���ֽ�)
+        age tinyint unsigned,
+      3��smallint (2���ֽ�)
+      4��bigint (8���ֽ�)
+    2��������
+      1��float(m,n) : �����ʾ7����Чλ
+      2��double(m,n)
+      3��decimal(m,n)
+  2���ַ�����
+    1������ ��char(���)
+    2���䳤 ��varchar(���)
+    3�����ı� ��text / longtext / blob / longblob
+    4��ע��
+      1�������Ͳ�������ʱ�Զ���ȫС��λλ��
+      2��С��λ�������ָ��λ��,���ָ��λ��һλ��������
+Day02�ʼ�
+1�����ֶβ���    rename     alter table ���� rename  �±���    �����ı�����
+		���ֶ������� Change     alter table  ���� change ԭ�� ���� ��������
+  1���﷨ ��alter table ���� ִ�ж���;
+    alter table ���� add �ֶ��� ��������;
+    alter table ���� add �ֶ��� �������� first;
+    alter table ���� add �ֶ��� �������� after �ֶ���;
+  3��ɾ���ֶ�(drop)
+    alter table ���� drop �ֶ���;
+  4���޸���������(modify)
+    alter table ���� modify �ֶ��� ����������;
+  5���ַ����Ϳ�Ⱥ���ֵ���Ϳ������
+    1����ֵ���Ϳ��Ϊ��ʾ���,ֻ����select��ѯʱ��ʾ,�ʹ洢�޹�,����zerofill�鿴Ч��
+    2���ַ����Ϳ�ȳ���֮���޷��洢
+  6����ϰ
+    1��������studb2
+      create database studb2;
+    2����studb2�д�����t1,�ֶ���3��
+      name ��age ��phnumber char(11)
+      use studb2;
+
+      create table t1(
+      name varchar(15),
+      age tinyint unsigned,
+      phnumber char(11)
+      );
+    3���鿴t1��ı�ṹ
+      desc t1;
+    4����t1���е�1���ֶ����id�ֶ�,Ҫ����ʾ���3,λ��������0���
+      alter table t1 add id int(3) zerofill first; 
+    5����phnumber���������͸�Ϊbigint
+      alter table t1 modify phnumber bigint;
+    6����t1�������һ���ֶ�����ֶ�address
+      alter table t1 add address varchar(30);
+    7��ɾ������age�ֶ�
+      alter table t1 drop age;
+    8���鿴t1��ṹ
+      desc t1;
+2����������
+  1����ֵ����
+  2���ַ�����
+  3��ö������
+    1����ѡ ��enum(ֵ1,ֵ2,ֵ3...)
+    2����ѡ ��set(ֵ1,ֵ2,ֵ3...)
+      ## �����¼ʱ ��"girl,study,mysql"
+  4������ʱ������
+    1��date ��"YYYY-MM-DD"
+    2��time ��"HH:MM:SS"
+    3��datetime ��"YYYY-MM-DD HH:MM:SS"
+    4��timestamp��"YYYY-MM-DD HH:MM:SS"
+    5��ע��
+      1��datetime ������ֵĬ�Ϸ���NULL
+      2��timestamp������ֵĬ�Ϸ���ϵͳ��ǰʱ��
+    6��ʾ��
+      1�������û���ֵ��
+	create table t7(
+	id int,
+	username varchar(20),
+	password varchar(20),
+	money int,
+	birthday date,
+	cztime timestamp
+	)charset=utf8;
+3������ʱ�亯��
+  1������
+    1��now() �����ص�ǰʱ��
+    2��curdate() ����������
+    3��curtime() ������ʱ��
+
+    4��year(date) ��ȡ�����
+    5��date(date) ��ȡ������
+    6��time(date) ��ȡ��ʱ��
+  2����ѯ2018��10��8���û���ֵ����Ϣ
+    select * from t7 where date(cztime)="2018-10-08";
+  3������2018��10��8��10:00-12:00��ֵ��Ϣ
+    select * from t7 where
+    cztime>="2018-10-08 10:00:00" and
+    cztime<="2018-10-08 12:00:00";
+  4������2018��10�·��û���ֵ��Ϣ
+    select * from t7 where
+    date(cztime)>="2018-10-01" and
+    date(cztime)<="2018-10-31";
+4������ʱ������
+  1���﷨��ʽ
+    select * from ���� where
+    �ֶ��� �����(now()-interval ʱ����λ);
+
+    ʱ����λ��
+      1 day | 2 hour | 3 year | 3 month
+  2��ʾ��
+    1����ѯ1�����ڵĳ�ֵ��¼
+      select * from t7 where
+      cztime>=(now()-interval 1 day);
+    2����ѯ1����ǰ��ֵ��¼
+      select * from t7 where
+      cztime<(now()-interval 1 year);
+    3����ѯ1����ǰ,3�����ڵĳ�ֵ��¼
+      select * from t7 where
+      cztime<=(now()-interval 1 day) and
+      cztime>=(now()-interval 3 day);
+5�����¼�Ĺ���
+  1��ɾ�����¼(delete)
+    1��delete from ���� where ����;
+      ## ����where����,ȫ��ɾ�����¼
+  2�����ı��¼(update)
+    1��update ���� set �ֶ�1=ֵ1,�ֶ�2=ֵ2 where ����;
+      ## ����where����,ȫ�����ı��¼
+  3����ϰ
+    1�������������Ӣ����Ϣ
+      select * from hero where country="���";
+    2����������ŮӢ�۵��������Ա�͹���
+      select name,sex,country from hero
+      where sex="Ů";
+    3����idΪ2�ļ�¼��Ϊ��Τ,�Ա���,���Ҹ�Ϊκ��
+      update hero set name="��Τ",sex="��",country="κ��" where id=2;
+    4��ɾ�����е����Ӣ��
+      delete from hero where country="���";
+    5���������Ĺ�����Ϊ κ��
+      update hero set country="κ��" where name="����";
+    6��ɾ�����еı��¼
+      delete from hero;
+6�����������
+  1����ֵ�Ƚ�&&�ַ��Ƚ�&&�߼��Ƚ�
+    1����ֵ�Ƚ� ��=  !=  >  >=  <  <= 
+    2���ַ��Ƚ� ��=  !=
+    3���߼��Ƚ� ��and ��or ��between ֵ1 and ֵ2
+      where id between 100 and 200;
+      where id>=100 and id<=200;
+    4��ʾ��
+      1���ҳ�����������200�����Ӣ�����ֺ͹�����
+        select name,gongji from sanguo 
+	where gongji>200 and country="���";
+      2�������Ӣ���й���ֵΪ110��Ӣ�۹���ֵ��Ϊ100,��������Ϊ60
+        update sanguo set gongji=100,fangyu=60 where country="���" and gongji=110;
+      3�����������κ����Ӣ����Ϣ
+        select * from sanguo where
+	country="���" or country="κ��";
+  2����Χ�ڱȽ�
+    1��where �ֶ��� in(ֵ1,ֵ2,...)
+    2��where �ֶ��� not in(ֵ1,ֵ2,...)
+    3��ʾ��
+      1�����ҹ���ֵ��100-200֮������Ӣ����Ϣ
+        select * from sanguo where
+	gongji between 100 and 200 and country="���"; 
+      2���ҵ�������������Ĺ��ҵ�ŮӢ����Ϣ
+        select * from sanguo where
+	country not in("���","���") and sex="Ů";
+      3���ҵ�idΪ1��3��5�����Ӣ�� �� ��������Ϣ
+        select * from sanguo where
+	(id in(1,3,5) and country="���") or name="����";
+  3��ƥ��ա��ǿ�
+    1��where name is NULL 
+    2��where name is not NULL
+    3��ʾ��
+      1����������ΪNULL�����ŮӢ����Ϣ
+        select * from sanguo where
+        name is NULL and country="���" and sex="Ů";
+    4��ע��
+      1��NULL ����ֵ,ֻ����is ��is notȥƥ��
+      2��""   �����ַ���,�� = ��!= ȥƥ��
+  5��ģ����ѯ(like)
+    1��where �ֶ��� like ���ʽ
+    2�����ʽ
+      % ��ƥ��0������ַ�
+      _ ��ƥ��1���ַ�
+    3��ʾ��
+      # �����а���2���ַ������ϵ�
+      select name from sanguo where name like "_%_";
+      # ƥ������(������NULL)
+      select name from sanguo where name like "%";
+      # ƥ��3���ַ�
+      select name from sanguo where name like "___";
+      # ƥ�����Ե���Ϣ
+      select name from sanguo where name like "��%";
+7��SQL��ѯ
+  1���ܽ�
+    3��select ...�ۺϺ��� from ����
+    1��where ...
+    2��group by ...
+    4��having ...
+    5��order by ...
+    6��limit ...;
+  2��order by ������ѯ�����������
+    1��... order by �ֶ��� ASC(����)/DESC(����)
+    2��ʾ��
+      1����Ӣ�۰�����ֵ�Ӹߵ�������
+        select * from sanguo order by fangyu DESC;
+      2�������Ӣ�۰�����ֵ�Ӹߵ�������
+        select * from sanguo where
+	country="���" order by gongji DESC;
+      3����κ������Ӣ��������Ϊ3���ֵ�Ӣ�۰�����ֵ��������
+        select * from sanguo where
+	country in("���","κ��") and 
+	name like "___" order by fangyu;
+  3��limit(��Զ����SQL�������д)
+    1���÷�
+      1��limit n   ����ʾn����¼
+      2��limit m,n ���ӵ�m+1����¼��ʼ,��ʾn��
+         limit 2,3 ����ʾ3��4��5������¼ 
+    2��ʾ��
+      1�������Ӣ����,���ҷ���ֵ������2����������4����Ӣ�ۼ�¼
+        select * from sanguo where
+	country="���"
+	order by fangyu ASC
+	limit 1,3;
+      2�������Ӣ����,���ҹ���ֵǰ3�������ֲ�ΪNULL��Ӣ�۵�����������ֵ�͹���
+        select name,gongji,country from sanguo
+	where
+	country="���" and name is not NULL
+	order by gongji DESC
+	limit 3;
+    3����ҳ
+      ÿҳ��ʾ5(m)����¼,��ʾ��4(n)ҳ�ļ�¼
+
+      limit 15,5
+      limit (4-1)*5,5
+      limit (n-1)*m,m
+  4���ۺϺ���
+    1������
+      avg(�ֶ�) ��ƽ��ֵ
+      max(�ֶ�) �����ֵ
+      min(�ֶ�) ����Сֵ
+      sum(�ֶ�) �����
+      count(�ֶ�) ��ͳ�Ƹ��ֶμ�¼������
+    2��ʾ��
+      1����������ǿֵ�Ƕ���?
+        select max(gongji) as max from sanguo;
+      2��ͳ��id��name�����ֶηֱ��м�����¼
+        select count(id),count(name) from sanguo;
+	select count(*) from sanguo;
+      3��ͳ�����Ӣ���й���ֵ����200��Ӣ������
+        select count(*) as number from sanguo
+	where
+	country="���" and gongji>200;
+  5��group by ������ѯ�Ľ�����з���
+    1��ʾ��
+      1������ÿ�����ҵ�ƽ��������
+        select country,avg(gongji) from sanguo
+	group by country;
+      2���������й��ҵ���Ӣ���� Ӣ����������ǰ2���� �������Ƽ�Ӣ������
+        select country,count(*) as num from sanguo
+	where sex="��"
+	group by country
+	order by num DESC
+	limit 2;
+	����        �ۺϺ���    ȥ��
+	���
+	���        100         ���
+	���
+
+	κ��
+	κ��        110         κ��
+	κ��
+
+	���        101         ���
+	���
+    2��ע��
+      1��group by���ֶ�������ҪΪselect����ֶ�
+      2�������ѯ�ֶκ�group by���ֶβ�һ��,�����Ը��ֶν��оۺϴ���(�ۺϺ���)
+  6��having ���Է���ۺϺ�Ľ�����н�һ��ɸѡ
+    1��ʾ��
+      �ҳ�ƽ������������105�Ĺ��ҵ�ǰ2��,��ʾ�������ƺ�ƽ��������
+      select country,avg(gongji) from sanguo
+      group by country
+      having avg(gongji)>105
+      order by avg(gongji) DESC
+      limit 2;
+    2��ע��
+      1��having���ͨ����group by����ʹ��
+      2��having�������ֲ���where�ؼ��ֲ�����ۺϺ�������ʹ�õĲ���,whereֻ�ܲ�������ʵ�ʴ��ڵ��ֶ�,having�������ǾۺϺ������ɵ���ʾ��
+      3.4 1/99 1/1000  45% 
+      -88
+      1
+      A
+      B
+      findOne
+          

@@ -1,0 +1,9 @@
+x1=input("输入第一行文字：")
+x2=input("输入第二行文字：")
+x3=input("输入第三行文字：")
+n=max(len(x1),len(x2),len(x3))+4
+print("+"+"-"*(n-2)+"+")
+print("|"+x1.center(n-2)+"|")
+print("|"+x2.center(n-2)+"|")
+print("|"+x3.center(n-2)+"|")
+print("+"+"-"*(n-2)+"+")

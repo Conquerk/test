@@ -1,0 +1,5 @@
+n=int(input("请输入宽度："))
+print("#"*n)
+print("#",' '*(n-2),"#",sep='')
+print("#",' '*(n-2),"#",sep='')
+print("#"*n)
